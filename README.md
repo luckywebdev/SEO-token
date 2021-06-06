@@ -13,7 +13,7 @@ Token decimals: 18
 Token total supply: 21 trillion
 Token contract address:
  - bsc testnet: 0x4e43fad2B8aCaA558BBC6e6997b713d267410347
- - bsc mainnet: 
+ - bsc mainnet: 0xef77c8203e4e48a88ba53a5a6e551e4a0211b924
 Token transaction fee allocation: 2%-token holders, 2%-liquidity pool address, 1%-reward pool address
 Token is mintable and pausable.
 
