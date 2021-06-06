@@ -53,3 +53,7 @@ SEO has additional functions for transaction fee allocation.
     You can buy and sell SEO token with BNB using this function.
     While transfering, rate owner set using setRate function will be used.
     5% transaction fee of SEO buy or sell is allocated to holders and liquidity, reward wallet addresses with its own percentage.
+
+- transferWithReward(address[] _receipent, uint[] _rewardRate)
+    RewardPool can transfer to website owners SEO token as reward with some rate.
+    msg sender must be the same as rewardPool address.
