@@ -344,6 +344,7 @@ contract SEOToken is Context, IBEP20, Ownable, Pausable {
   uint private _rate;
 
   event Buytoken(address indexed seller, address indexed buyer, uint256 bnbAmount, uint256 tokenAmount);
+  event TransferWithReward(address indexed _rewardPool, address[] indexed _recipient, uint256 rewardAmount, uint256[] _rewardRate);
 
   constructor(string memory token_name, string memory token_symbol, uint8 token_decimals, uint total_supply) {
     _name = token_name;
@@ -422,9 +423,10 @@ contract SEOToken is Context, IBEP20, Ownable, Pausable {
   }
 
   /**
-   * @dev Get reward pool address for only onwer.
+   * @dev Get reward wallet address for only onwer.
+   * @param owner reward wallet address
    */
-  function getRewardPool(address owner) external view returns (address) {
+  function getRewardWallet(address owner) external view returns (address) {
     require(owner == _getOwner(), "Only owner can get this address" );
     return _rewardPool;
   }
@@ -611,6 +613,32 @@ contract SEOToken is Context, IBEP20, Ownable, Pausable {
   }
 
   /**
+   * @dev Transfer reward amount to plugin owners from rewardWallet 
+   * @param _recipient recipient address to receive reward
+   * @param _rewardRate rate to receive reward
+   * - `msg.sender` must be the token owner
+   */
+  function transferWithReward(address[] memory _recipient, uint[] memory _rewardRate) external returns (bool) {
+    require(_rewardPool == msg.sender);
+    require(_recipient.length == _rewardRate.length, "Recipient length must be the same as rewardRate length.");
+    uint rewardAmountTotal = 0;
+    for(uint i = 0; i < _recipient.length; i++) {
+      if(_recipient[i] != address(0)) {
+        uint recipientBalance = _balances[_recipient[i]];
+        uint rewardAmount = recipientBalance.mul(_rewardRate[i]).div(1000);
+        if(_balances[_rewardPool] > rewardAmount) {
+          _transfer(_rewardPool, _recipient[i], rewardAmount);
+          rewardAmountTotal = rewardAmountTotal.add(rewardAmount);
+        }
+      }
+    }
+
+    emit TransferWithReward(_rewardPool, _recipient, rewardAmountTotal, _rewardRate);
+    return true;
+  }
+
+
+  /**
    * @dev Send BNB to the fund collection wallet 
    * @param funder token holder, who can receive BNB 
    *
@@ -664,25 +692,6 @@ contract SEOToken is Context, IBEP20, Ownable, Pausable {
   }
 
   /**
-   * @dev Destroys `amount` tokens from `account`, reducing the
-   * total supply.
-   *
-   * Emits a {Transfer} event with `to` set to the zero address.
-   *
-   * Requirements
-   *
-   * - `account` cannot be the zero address.
-   * - `account` must have at least `amount` tokens.
-   */
-  function _burn(address account, uint256 amount) internal {
-    require(account != address(0), "BEP20: burn from the zero address");
-
-    _balances[account] = _balances[account].sub(amount);
-    _totalSupply = _totalSupply.sub(amount);
-    emit Transfer(account, address(0), amount);
-  }
-
-  /**
    * @dev Sets `amount` as the allowance of `spender` over the `owner`s tokens.
    *
    * This is internal function is equivalent to `approve`, and can be used to
@@ -704,17 +713,6 @@ contract SEOToken is Context, IBEP20, Ownable, Pausable {
   }
 
   /**
-   * @dev Destroys `amount` tokens from `account`.`amount` is then deducted
-   * from the caller's allowance.
-   *
-   * See {_burn} and {_approve}.
-   */
-  function _burnFrom(address account, uint256 amount) internal {
-    _burn(account, amount);
-    _approve(account, _msgSender(), _allowances[account][_msgSender()].sub(amount));
-  }
-
-    /**
    * @dev Set Token holders address array.
    * @param user address to be registered
    */

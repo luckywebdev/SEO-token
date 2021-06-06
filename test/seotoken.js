@@ -14,42 +14,25 @@ contract('SEOToken', (accounts) => {
     assert.equal(rateCurrent, 0.5, "0.5 wasn in rate setting");
 
   });
-  it('should call a function that get total supply', async () => {
-    const seoTokenTotalSupply = (await seoTokenInstance.totalSupply.call()).toNumber();
-
-    assert.equal(seoTokenTotalSupply, 21000000000000, "21000000000000 wasn't in total Supply");
-  });
   it('should confirm seo token info correctly', async () => {
-    const seoTokenName = await seoTokenInstance.name.call();
     const seoTokenOwner = await seoTokenInstance.getOwner.call();
-    const seoTokenSymbol = await seoTokenInstance.symbol.call();
-    const seoTokenDecimals = (await seoTokenInstance.decimals.call()).toNumber();
 
-    // Get initial balances of first and second account.
+    // Get initial token owner address.
     assert.equal(seoTokenOwner, accounts[0], "SEO token owner wasn't first account correctly");
-    assert.equal(seoTokenName, "SEO mockup coin2", "SEO token name wasn't equal to 'SEO coin'");
-    assert.equal(seoTokenSymbol, "SEO", "SEO token symbol wasn't equal to 'SEO'");
-    assert.equal(seoTokenDecimals, 18, "SEO token decimals wasn't equal to 18");
   });
-  it('should send seo token to another address correctly', async () => {
-    // Setup 2 accounts.
-    const accountOne = accounts[0];
-    const accountTwo = accounts[1];
+  it('should be set token holders and lquidity pool, reward wallet correctly', async () => {
 
-    // Get initial balances of first and second account.
-    const accountOneStartingBalance = (await seoTokenInstance.balanceOf.call(accountOne)).toNumber();
-    const accountTwoStartingBalance = (await seoTokenInstance.balanceOf.call(accountTwo)).toNumber();
+    // Set token holders and liquidity, reward wallet.
+    await seoTokenInstance.setHolders(0x7EF5A63908aF1104151F0aE7Af59fA3D691e946c);
+    const holders = await seoTokenInstance.getHolders().call({from: account[0]});
+    assert.equal(holders[0], "0x7EF5A63908aF1104151F0aE7Af59fA3D691e946c", "Holders address is not correctly");
+ 
+    await seoTokenInstance.setLiquidity(0x8dD9036Bed920BaEce2fBdD49A498F78f184E2ef);
+    const liquidity = await seoTokenInstance.getLiquidity().call({from: account[0]});
+    assert.equal(liquidity, "0x8dD9036Bed920BaEce2fBdD49A498F78f184E2ef", "liquidity address is not correctly");
 
-    // Make transaction from first account to second.
-    const amount = 10;
-    await seoTokenInstance.transfer(accountTwo, amount, { from: accountOne });
-
-    // Get balances of first and second account after the transactions.
-    const accountOneEndingBalance = (await metaCoinInstance.getBalance.call(accountOne)).toNumber();
-    const accountTwoEndingBalance = (await metaCoinInstance.getBalance.call(accountTwo)).toNumber();
-
-
-    assert.equal(accountOneEndingBalance, accountOneStartingBalance - amount, "Amount wasn't correctly taken from the sender");
-    assert.equal(accountTwoEndingBalance, accountTwoStartingBalance + amount, "Amount wasn't correctly sent to the receiver");
+    await seoTokenInstance.setRewardWallet(0x90713Bc1562FB4359F9d227ac42eAcEBfE96bFC9);
+    const rewardWallet = await seoTokenInstance.getRewardWallet().call({from: account[0]});
+    assert.equal(rewardWallet, "0x90713Bc1562FB4359F9d227ac42eAcEBfE96bFC9", "reward Wallet address is not correctly");
   });
 });

@@ -22,34 +22,34 @@ Inherited BEP20 basic token functions : allowance, balanceOf, approve, transfer,
 
 Ownable contract functions:
 - transferOwnership(address newOwner)
-It will change owner of SEO token contract to new owner.
+    It will change owner of SEO token contract to new owner.
 
 Pausable contract functions:
 - pause()/unpause()
-It makes token don’t mint.
+    It makes token don’t mint.
 
 SEO has additional functions for transaction fee allocation.
 - setRate(uint256 rateBNB)
-It can be used to set rate of token vs BNB.
-It is 3 decimal function. So you should set the argument to 500 to set 0.5 rates.
-It is ownable function so only owner can set rate.
+    It can be used to set rate of token vs BNB.
+    It is 3 decimal function. So you should set the argument to 500 to set 0.5 rates.
+    It is ownable function so only owner can set rate.
 
 - setHolders(address holder)
-It is the function to set holder address to get 2% reward allocated from transaction fee.
-It is also ownable function and so only owner can adjust this function.
-After set holder address, owner can check holders list with getHolders function.
+    It is the function to set holder address to get 2% reward allocated from transaction fee.
+    It is also ownable function and so only owner can adjust this function.
+    After set holder address, owner can check holders list with getHolders function.
 
 - setLiquidity(address liquidity)
-It is the function to set liquidity address to get 2% reward allocated from transaction fee.
-It is also ownable function and so only owner can set and change liquidtiy address using this function.
-After set liquidity address, owner can check current liquidity address with getLiquidity function.
+    It is the function to set liquidity address to get 2% reward allocated from transaction fee.
+    It is also ownable function and so only owner can set and change liquidtiy address using this function.
+    After set liquidity address, owner can check current liquidity address with getLiquidity function.
 
 - setRewardWallet(address liquidity)
-It is the function to set reward wallet address to get 1% reward allocated from transaction fee.
-It is also ownable function and so only owner can set and change reward wallet address using this function.
-After set reward wallet address, owner can check current reward wallet address with getRewardWallet function.
+    It is the function to set reward wallet address to get 1% reward allocated from transaction fee.
+    It is also ownable function and so only owner can set and change reward wallet address using this function.
+    After set reward wallet address, owner can check current reward wallet address with getRewardWallet function.
 
 - buyTokens(address payable seller)
-You can buy and sell SEO token with BNB using this function.
-While transfering, rate owner set using setRate function will be used.
-5% transaction fee of SEO buy or sell is allocated to holders and liquidity, reward wallet addresses with its own percentage.
+    You can buy and sell SEO token with BNB using this function.
+    While transfering, rate owner set using setRate function will be used.
+    5% transaction fee of SEO buy or sell is allocated to holders and liquidity, reward wallet addresses with its own percentage.
