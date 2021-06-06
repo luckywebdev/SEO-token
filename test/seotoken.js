@@ -23,16 +23,16 @@ contract('SEOToken', (accounts) => {
   it('should be set token holders and lquidity pool, reward wallet correctly', async () => {
 
     // Set token holders and liquidity, reward wallet.
-    await seoTokenInstance.setHolders(0x7EF5A63908aF1104151F0aE7Af59fA3D691e946c);
+    await seoTokenInstance.setHolders(0x6EF5A3a808aF1104151F0aE7Af59fA3D691e946c);
     const holders = await seoTokenInstance.getHolders().call({from: account[0]});
-    assert.equal(holders[0], "0x7EF5A63908aF1104151F0aE7Af59fA3D691e946c", "Holders address is not correctly");
+    assert.equal(holders[0], "0x6EF5A3a808aF1104151F0aE7Af59fA3D691e946c", "Holders address is not correctly");
  
-    await seoTokenInstance.setLiquidity(0x8dD9036Bed920BaEce2fBdD49A498F78f184E2ef);
+    await seoTokenInstance.setLiquidity(0x8dDa136Be59c0BaEce2fBdD49A498F78f184E2ef);
     const liquidity = await seoTokenInstance.getLiquidity().call({from: account[0]});
-    assert.equal(liquidity, "0x8dD9036Bed920BaEce2fBdD49A498F78f184E2ef", "liquidity address is not correctly");
+    assert.equal(liquidity, "0x8dDa136Be59c0BaEce2fBdD49A498F78f184E2ef", "liquidity address is not correctly");
 
-    await seoTokenInstance.setRewardWallet(0x90713Bc1562FB4359F9d227ac42eAcEBfE96bFC9);
+    await seoTokenInstance.setRewardWallet(0x25c13Ac1562FB4359F9d227ac42eAcEBfE96bFC9);
     const rewardWallet = await seoTokenInstance.getRewardWallet().call({from: account[0]});
-    assert.equal(rewardWallet, "0x90713Bc1562FB4359F9d227ac42eAcEBfE96bFC9", "reward Wallet address is not correctly");
+    assert.equal(rewardWallet, "0x25c13Ac1562FB4359F9d227ac42eAcEBfE96bFC9", "reward Wallet address is not correctly");
   });
 });
