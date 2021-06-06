@@ -1,5 +1,5 @@
-# SEO-token
-SEO token description ![SEO Logo](/assets/seo/32x32.png)
+# SEO-token ![SEO Logo](/assets/seo/32x32.png)
+SEO token description 
 
     1. Introduction
 SEO token is SEO.MONEY protocol token based on BEP20 standard, which aims to provide rewards for website owners in SEO.MONEY service.
