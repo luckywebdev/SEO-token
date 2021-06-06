@@ -1,4 +1,4 @@
-![SEO Logo](/assets/seo/32x32.png) # SEO-token 
+# ![SEO Logo](/assets/seo/32x32.png) SEO-token 
 SEO token description 
 
     1. Introduction
