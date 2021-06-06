@@ -4,6 +4,8 @@ SEO token description
     1. Introduction
 SEO token is SEO.MONEY protocol token based on BEP20 standard, which aims to provide rewards for website owners in SEO.MONEY service.
 SEO will be allocated to token holders, liquidity pool, reward pool addresses with 5% transaction fee of SEO.
+![SEO Logo](/assets/seo/32x32.png)
+Format: ![Alt Text](url)
 
     2. Token basic info
 Token name: SEO coin
